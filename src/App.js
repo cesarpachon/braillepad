@@ -12,9 +12,10 @@ export const history = createBrowserHistory({
 
 
 export default function App() {
+  console.log('app', process.env.PUBLIC_URL );
   return (
     <Routes>
-      <Route path='/' element={<HomePage/>} />
+      <Route path={`/`} element={<HomePage/>} />
       <Route path='/notes' element={<NotesPage/>} />
       <Route path='/edit/:id' element={<EditPage/>} />
     </Routes>

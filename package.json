@@ -2,7 +2,7 @@
   "name": "braillepad",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://cesarpachon.github.com/braillepad/build",
+  "homepage": "https://s3-us-west-2.amazonaws.com/test-materials/braillepad",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^13.0.0",
