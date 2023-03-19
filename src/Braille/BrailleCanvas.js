@@ -28,11 +28,13 @@ const  BRAILLE = {
   "101011": "z",
   "001001": " ",
   "010010": "-",
+  "111111": "CLOSE",
 };
 
 let ctx = null;
 let TOUCHES = [];
 let timeoutid = null;
+let debugstr = '';
 
 const BrailleCanvas = ({ onChange }) => {
   const canvasRef = React.useRef();
@@ -59,15 +61,17 @@ const BrailleCanvas = ({ onChange }) => {
     const radius = 30;
     for(let i=0; i<TOUCHES.length; i+=1) {
       const touch = TOUCHES[i];
+      const x = touch.clientX;
+      const y = touch.clientY;
       ctx.beginPath();
-      ctx.arc(touch.clientX, touch.clientY, radius, 0, 2 * Math.PI, false);
+      ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
       ctx.fillStyle = 'green';
       ctx.fill();
       ctx.lineWidth = 5;
       ctx.strokeStyle = '#003300';
       ctx.stroke();
       ctx.fillStyle = 'black';
-      ctx.fillText(`${i+1}`, touch.clientX - 10, touch.clientY + 10); 
+      ctx.fillText(`${i+1}`, x - 10, y + 10); 
     };
   }
 
@@ -109,11 +113,12 @@ const BrailleCanvas = ({ onChange }) => {
     const brailleval = BRAILLE[braillekey];
     console.log(braillekey, brailleval);
 
-    onChange(brailleval, braillekey);
+    onChange(brailleval + debugstr, braillekey);
   }
 
   function onTimeout() {
     console.log("touches: ", TOUCHES.length);
+    // debugstr=`touches:${TOUCHES.length}`;
     processTouches();
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
   }
@@ -121,17 +126,17 @@ const BrailleCanvas = ({ onChange }) => {
   function onTouchStart(ev) {
     console.log("start");
     ev.preventDefault();
-    console.log(ev.targetTouches);
+    console.log(ev.touches);
     clearTimeout(timeoutid);
-    timeoutid = setTimeout(onTimeout, 1000);
-    TOUCHES = ev.targetTouches;
+    timeoutid = setTimeout(onTimeout, 400);
+    TOUCHES = ev.touches;
     drawTouches();
     return false;
   }
 
   function onTouchEnd(ev) {
     ev.preventDefault();
-    console.log(ev.targetTouches);
+    console.log(ev.touches);
     return false;
   }
 

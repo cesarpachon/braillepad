@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import * as notesStore from '../notesStore.js';
 import BrailleCanvas from '../Braille/BrailleCanvas.js';
 
+const audio =  new Audio('./393064__sbaneat__golpecito.wav');
+
 export default function UserPage() {
   const { id } = useParams();
   const [note, setNote] = useState({});
@@ -24,8 +26,19 @@ export default function UserPage() {
   }
 
   function onChange(newtext, braillekey) {
-    note.text = `${text} ${newtext}[${braillekey}]`;
+    if (newtext) {
+      if(newtext === 'CLOSE') {
+        setMode('');
+      } else {
+        note.text = `${text}${newtext}`;
+      }
+    } else {
+      //for debugging
+      note.text = `${text}${braillekey}`;
+    }
     setText(note.text);
+    notesStore.saveNotes();
+    audio.play(); 
   }
 
 return (
@@ -37,7 +50,7 @@ return (
     <BrailleCanvas onChange={onChange} />
   }
   </h1>
-<div>{text}</div>
+  <div>{text}</div>
 </>
 );
 }
