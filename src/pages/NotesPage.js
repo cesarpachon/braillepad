@@ -13,6 +13,10 @@ export default function UserPage() {
     navigate(`/edit/${noteid}`);
   }
 
+  function onHome() {
+    navigate('/');
+  }
+
   function newNote() {
     notesStore.addNote("new note");
     setNotes(notesStore.getNotes());
@@ -20,8 +24,12 @@ export default function UserPage() {
 
   return (
   <>
-    <h1>Your Notes: <button type="button" onClick={newNote}>Add</button></h1>
-    <ul>
+    <h1>Your Notes</h1>
+    <div>
+      <button type="button" onClick={newNote}>Add</button>
+      <button type="button" onClick={onHome}>Home</button>
+    </div>
+    <ul className='notes'>
       { notes && notes.map((note) => <li
       key={note.id}
       onClick={() => onNote(note.id)}

@@ -3,11 +3,26 @@ export function getNotes() {
   if (!db) {
     db = "[]";
   }
-  return JSON.parse(db);
+  let notes = [];
+  try {
+    notes = JSON.parse(db);
+  } catch(err) {
+    console.error(err);
+  }
+  return notes;
 }
 
 export function saveNotes(notes) {
   localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+export function saveNote(note) {
+  const notes = getNotes();
+  const index = notes.findIndex((n) => n.id === note.id);
+  if(index > -1) {
+    notes[index] = note;
+  }
+  saveNotes(notes);
 }
 
 export function addNote(title){

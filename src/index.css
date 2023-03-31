@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+button {
+    padding: 10px;
+    font-size: 1rem;
+    margin: 10px;
+    background-color: cadetblue;
+    color: aliceblue;
+    font-weight: bold;
+}
+
+ul.notes {
+  list-style: 'none';
+  padding: 0;
+}
+
+ul.notes li {
+    margin: 10px 0;
+    font-size: 1.2rem;
+    background-color: cadetblue;
+    padding: 10px;
+}
+
+.braille {
+  padding: 10px;
+  background-color: skyblue;
+  margin: 5px;
+}
+
