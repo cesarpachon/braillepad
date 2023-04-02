@@ -39,3 +39,10 @@ ul.notes li {
   margin: 5px;
 }
 
+/*
+ https://stackoverflow.com/questions/16163089/background-element-goes-black-when-entering-fullscreen-with-html5
+ */
+:fullscreen, ::backdrop {
+    background-color: rgba(255,255,255,0);
+}
+

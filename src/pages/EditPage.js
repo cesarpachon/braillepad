@@ -88,7 +88,12 @@ export default function EditPage() {
    console.log("todo rename"); 
   }
 
-  function edit() {
+  async function edit() {
+    try {
+    await document.getElementsByTagName("body")[0].requestFullscreen();
+    } catch(err) {
+      console.error(err);
+    }
     setMode('edit');
     setText(note.text);
   }
@@ -96,9 +101,12 @@ export default function EditPage() {
   /**
   */
   function readLastWord() {
+    const lines = note.text.split('\n');
+    if(!lines.length) return;
+    const line = lines.pop();
     const words = note.text.split(" ");
     if(!words.length) return;
-    const word = words[words.length - 1];
+    const word = words.pop();
     queue = ['READ', ...word];
     processQueue();
   }
@@ -106,8 +114,16 @@ export default function EditPage() {
   function onChange(newtext, braillekey) {
     if (newtext) {
       if(newtext === 'CLOSE') {
+        try {
+          document.exitFullScreen();
+        } catch(err) {
+          console.error(err);
+        }
         setMode('');
+        queue = [];
+        play('CLOSE');
       } else if (newtext === 'ENTER') {
+        queue = [];
         play(newtext);
         note.text = `${text}\n`;
       } else if (newtext === 'READ') {
@@ -118,10 +134,12 @@ export default function EditPage() {
         processQueue();
         note.text = text.substring(0, text.length - 1);
       } else {
+        queue = [];
         play(newtext);
         note.text = `${text}${newtext}`;
       }
     } else {
+      queue = [];
       //for debugging
       console.log(`unknown: ${newtext} ${braillekey}`);
     }
