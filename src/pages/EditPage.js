@@ -4,7 +4,6 @@ import * as notesStore from '../notesStore.js';
 import BrailleCanvas from '../Braille/BrailleCanvas.js';
 import { useNavigate } from 'react-router-dom'
 
-const audio =  new Audio('./tap.wav');
 
 const audios = {
   "a": new Audio("./letras/alphabet-a.mp3"),
@@ -38,6 +37,10 @@ const audios = {
   "ENTER": new Audio("./letras/ENTER.mp3"),
   " ": new Audio("./letras/SPACE.mp3"),
   "-": new Audio("./letras/GUION.mp3"),
+  "¡!": new Audio("./letras/ADMIRACION.mp3"),
+  ",": new Audio("./letras/COMA.mp3"),
+  ".": new Audio("./letras/PUNTO.mp3"),
+  "¿?": new Audio("./letras/INTERROGACION.mp3"),
   "CLOSE": new Audio("./letras/CLOSE.mp3"),
   "READ": new Audio("./letras/READ.mp3"),
 };
@@ -95,8 +98,9 @@ export default function EditPage() {
   function readLastWord() {
     const words = note.text.split(" ");
     if(!words.length) return;
-    const word = words.length - 1;
+    const word = words[words.length - 1];
     queue = ['READ', ...word];
+    processQueue();
   }
 
   function onChange(newtext, braillekey) {
@@ -119,7 +123,6 @@ export default function EditPage() {
       }
     } else {
       //for debugging
-      audio.play(); 
       console.log(`unknown: ${newtext} ${braillekey}`);
     }
     setText(note.text);

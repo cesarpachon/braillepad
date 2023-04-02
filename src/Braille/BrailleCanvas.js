@@ -1,6 +1,11 @@
 import React from "react";
 import BRAILLE from './codes.js';
 
+const audio =  new Audio('./tap.wav');
+
+// default: left: 1, 2, 3 right: 4, 5, 6
+// reverse: left: 4,, 5, 6 left: 1, 2, 3
+const REVERSE = true;
 
 let ctx = null;
 let TOUCHES = [];
@@ -62,20 +67,20 @@ const BrailleCanvas = ({ onChange }) => {
       if(touch.clientX < width*0.5) {
         // 1, 2 or 3
         if ((touch.clientY) < height * 0.33) {
-          pressed[0] = 1;
+          pressed[REVERSE ? 3 : 0] = 1;
         } else if ((touch.clientY) > height * 0.66) {
-          pressed[2] = 1;
+          pressed[REVERSE ? 5 : 2] = 1;
         } else {
-          pressed[1] = 1;
+          pressed[REVERSE ? 4 : 1] = 1;
         }
       } else {
         // 4, 5, or 6
         if (touch.clientY < height * 0.33) {
-          pressed[3] = 1;
+          pressed[REVERSE ? 0 :3] = 1;
         } else if (touch.clientY > height * 0.66) {
-          pressed[5] = 1;
+          pressed[REVERSE ? 2 :5] = 1;
         } else {
-          pressed[4] = 1;
+          pressed[REVERSE ? 1 :4] = 1;
         }
       }
     }
@@ -83,7 +88,7 @@ const BrailleCanvas = ({ onChange }) => {
     console.log("BRAILLE IS", BRAILLE);
     console.log("BRAILLE find", BRAILLE.find);
     const entry = BRAILLE.find((b) => b.braille === braillekey);
-    if(entry) {
+    if (entry) {
       const {braille, label} = entry;
       console.log(braillekey, label);
       onChange(label, braillekey);
@@ -107,6 +112,7 @@ const BrailleCanvas = ({ onChange }) => {
     timeoutid = setTimeout(onTimeout, 400);
     TOUCHES = ev.touches;
     drawTouches();
+    audio.play(); 
     return false;
   }
 

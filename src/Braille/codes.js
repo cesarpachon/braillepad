@@ -16,6 +16,7 @@ const BRAILLE = [
   { braille: "101010", label: "o"},
   { braille: "111100", label: "p"},
   { braille: "111110", label: "q"},
+  { braille: "111101", label: "ñ"},
   { braille: "111010", label: "r"},
   { braille: "011100", label: "s"},
   { braille: "011110", label: "t"},
@@ -24,10 +25,14 @@ const BRAILLE = [
   { braille: "101101", label: "x"},
   { braille: "101111", label: "y"},
   { braille: "101011", label: "z"},
+  { braille: "001000", label: "."},
+  { braille: "011010", label: "¡!"},
+  { braille: "010001", label: "¿?"},
+  { braille: "010000", label: ","},
   { braille: "001001", label: " "},
   { braille: "010010", label: "-"},
-  { braille: "011001", label: "READ"}, // READ LAST WORD
-  { braille: "011011", label: "DELETE"},
+  { braille: "011001", label: "DELETE"}, // READ LAST WORD
+  { braille: "011011", label: "READ"},
   { braille: "001011", label: "ENTER"},
   { braille: "111111", label: "CLOSE"},
 ];
